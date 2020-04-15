@@ -8,16 +8,16 @@ services:
             dockerfile: Dockerfile
         env_file: .env
         environment:
-            VIRTUAL_HOST: agoa.wildsong.biz
-            VIRTUAL_PORT: 8022
+            VIRTUAL_HOST: ${VHOST}
+            VIRTUAL_PORT: ${VPORT}
             NETWORK_ACCESS: internal
-            LETSENCRYPT_HOST: agoa.wildsong.biz
-            LETSENCRYPT_MAIL: brian@wildsong.biz
+            LETSENCRYPT_HOST: ${VHOST}
+            LETSENCRYPT_MAIL: ${MY_EMAIL}
             SSH_HOST: ${SSH_HOST}
         expose: 
             - 8022
         ports:
-            - 8022:8022
+            - ${VPORT}:8022
         networks:
             - proxy_net
         restart: unless-stopped
