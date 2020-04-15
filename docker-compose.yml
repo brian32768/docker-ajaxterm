@@ -1,0 +1,29 @@
+version: '3.6'
+services:
+    ajaxterm:
+        container_name: ajaxterm
+        image: ajaxterm
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file: .env
+        environment:
+            VIRTUAL_HOST: agoa.wildsong.biz
+            VIRTUAL_PORT: 8022
+            NETWORK_ACCESS: internal
+            LETSENCRYPT_HOST: agoa.wildsong.biz
+            LETSENCRYPT_MAIL: brian@wildsong.biz
+            SSH_HOST: ${SSH_HOST}
+        expose: 
+            - 8022
+        ports:
+            - 8022:8022
+        networks:
+            - proxy_net
+        restart: unless-stopped
+        command: ["/usr/bin/ajaxterm", "-c", "ssh ${SSH_HOST}"]
+
+networks:
+    proxy_net:
+        name: proxy_net
+        external: true
